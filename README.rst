@@ -18,6 +18,8 @@ Some functions are so common that I tend to need them in all my applications. I'
 
 
 [www.coolit.co.za](http://www.coolit.co.za/index.htm)
+
 🔧🔨📌💬
+
 ----------------------------------------
 ✳️  Bruce Wernick
