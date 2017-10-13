@@ -1,4 +1,5 @@
-# TechniSolve Python Toolbox
+TechniSolve Python Toolbox
+==========================
 
 Some functions are so common that I tend to need them in all my applications. I've been lazy to structure a library and ended up with multiple copies all over the place. This is my attempt to learn Python packaging and to finally gather my common tools into one useful place.
 
