@@ -1,7 +1,7 @@
 """
 1d interpolation by lagrange method
 Bruce Wernick
-10 October 2017 15:38:10
+22 September 2017 20:59:31
 """
 
 from __future__ import division

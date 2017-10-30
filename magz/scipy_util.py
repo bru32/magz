@@ -6,14 +6,15 @@ Bruce Wernick
 
 from __future__ import division
 import numpy as np
-import scipy.optimize as sciopt
+import scipy.optimize as sci
 import warnings
 
 all = ['fsolve']
 
 
 def fsolve(f, x0=1.0, args=None):
-  [x] = sciopt.fsolve(f, x0=x0, args=args)
+  "scipy.optimize.fsolve shell"
+  [x] = sci.fsolve(f, x0=x0, args=args)
   return x
 
 

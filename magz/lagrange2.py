@@ -2,7 +2,7 @@
 Lagrange 2D
 Stoecker "Design of Thermal Systems", 2nd ed. page 62.
 Bruce Wernick
-10 October 2017 15:38:10
+22 September 2017 5:21:48
 """
 
 from __future__ import division
@@ -12,7 +12,8 @@ def lagrange2d(X, Y, Z):
   X[0..m-1] and Y[0..n-1] are the independent variables.
   Z[0..n-1,0..m-1] is the dependent variable
   """
-  m, n = len(X), len(Y)
+  m = len(X)
+  n = len(Y)
   if len(Z) <> n or len(Z[0]) <> m:
     raise ValueError('Z dimensions must be the same as X by Y!')
   def f(x, y):
@@ -30,19 +31,49 @@ def lagrange2d(X, Y, Z):
     return z
   return f
 
+def polyARI((a,b,c,d,e,f,g,h,i,j),x,y):
+  return a+x*(x*(x*g+d)+b)+y*(y*(y*j+f)+c)+x*y*(e+x*h+y*i)
+
+def frange(a, b, n):
+  r = []
+  for i in range(n):
+    r.append(a + (b-a)*float(i)/(n-1.0))
+  return r
+
 
 # ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
 
-  # 2D Lagrange example
-  x = [1,2,3,4,5]
-  y = [2,4,6]
-  z = [[1,2,3,4,5],
-       [2,3,4,5,6],
-       [3,4,5,6,7]]
-  f = lagrange2d(x,y,z)
-  print f(2,4)
+  # thermal engineering example
+  # te = evap temp [degC]
+  # tc = cond temp [degC]
+  # qe = cooling duty [kW]
+  te = [-5.0, 0.0, 5.0, 6.0, 10.0, 12.5]
+  tc = [32.0, 35.0, 45.0, 47.0, 55.0]
 
+  # build some realistic data using ari coefficients
+  a = [17.28,8.4e-1,1.09e-1,1.5e-2,-7.0e-3,-5.66e-3,
+       1.014e-4,-1.56e-4,2.06e-05,3.72e-05]
+  qe = [[polyARI(a, x, y) for x in te] for y in tc]
 
+  # create a lagrangian interpolator
+  q = lagrange2d(te,tc,qe)
+
+  # show the differences
+  tcRange = frange(tc[0], tc[-1], 7)
+  teRange = frange(te[0], te[-1], 9)
+  print ' '*8 + 'Difference table'
+  print ' '*6,
+  for x in teRange:
+    print '{:6.2f}'.format(x),
+  print
+  print '-'*69
+  for y in tcRange:
+    print '{:6.2f}'.format(y),
+    for x in teRange:
+      q1 = q(x, y)
+      q2 = polyARI(a, x, y)
+      print '{:6.2f}'.format(q2),
+    print
 

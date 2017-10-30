@@ -25,7 +25,7 @@ def poly2DU(a,x,y):
   d=(a[5]+x*a[8])+y*a[9]
   return a[0] + x*b + y*(c + y*d)
 
-def poly2D(((a,b,c,d,e,f,g,h,i)), x, y):
+def poly2D((a,b,c,d,e,f,g,h,i), x, y):
   "Quadratic in 2D with cross-terms"
   return a + x*(b + x*c) + y*(d + y*e) + x*y*(f + x*g + y*h + x*y*i)
 
@@ -58,5 +58,3 @@ if __name__ == '__main__':
 
   print polyeval([1,2,3],2)
   print polydval([-6,1,1],2) # f=(x-2)(x+3)=-6+x+x2  df=1+2x (at x=2 r=(0,5))
-
-
