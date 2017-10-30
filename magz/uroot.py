@@ -1,7 +1,7 @@
 """
 1D RootFind class
 Bruce Wernick
-29 October 2017 4:46:20
+30 October 2017 11:17:00
 """
 
 from __future__ import division
