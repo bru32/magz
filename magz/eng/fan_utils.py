@@ -42,7 +42,7 @@ def get_pole(dia,hub,blade):
 
 def fancode(code):
   "split code into (dia,hub,blade)"
-  dia,hub,blade=map(int,code.split('/'))
+  dia,hub,blade=list(map(int,code.split('/')))
   return (dia,hub,blade)
 
 def toSPL(swl, Q=4.0, r=3.0):

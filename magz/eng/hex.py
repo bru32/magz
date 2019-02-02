@@ -32,6 +32,6 @@ def lmtd(itd, otd):
 
 if __name__ == '__main__':
 
-  print ePhase(3.0)
-  print eCounter(0.7, 3.0)
-  print lmtd(22.0, 24.0)
+  print((ePhase(3.0)))
+  print((eCounter(0.7, 3.0)))
+  print((lmtd(22.0, 24.0)))
