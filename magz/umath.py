@@ -4,7 +4,7 @@ Bruce Wernick
 10 October 2017 15:38:10
 """
 
-from __future__ import division
+
 import math
 import sys
 
@@ -52,7 +52,7 @@ def SQR(a):
 
 def showvec(x, f='%0.6f'):
   "string format of vector"
-  return '[' + ', '.join(map(lambda v: f % v, x)) + ']'
+  return '[' + ', '.join([f % v for v in x]) + ']'
 
 def makemat(m, n, value=1.0):
   "make 2D array"
@@ -160,13 +160,13 @@ def golden(f, a, b, tol=1e-3):
 
 if __name__ == '__main__':
 
-  print max2([3,5,7,8,17,12])
+  print((max2([3,5,7,8,17,12])))
 
   from utils import linrange
   f = lambda x: (x-2)*(x+3)
   x = golden(f, -10, 10)
-  print 'f({}) = {}'.format(x, f(x))
+  print(('f({}) = {}'.format(x, f(x))))
   for x in linrange(-10, 10, 10):
-    print 'f({}) = {}'.format(x, f(x))
+    print(('f({}) = {}'.format(x, f(x))))
 
 

@@ -15,7 +15,7 @@ def nice_ceil(x):
   if x<0:
     return -1*nice_floor(-1*x)
   z = 10.0 ** math.floor(math.log10(x))
-  for i in xrange(len(nice_intervals) - 1):
+  for i in range(len(nice_intervals) - 1):
     result = z*nice_intervals[i]
     if x<=result:
       return result
@@ -28,7 +28,7 @@ def nice_floor(x):
     return -1*nice_ceil(-1*x)
   z = 10.0 ** (math.ceil(math.log10(x)) - 1.0)
   r = x / z
-  for i in xrange(len(nice_intervals)-1, 1, -1):
+  for i in range(len(nice_intervals)-1, 1, -1):
     result = nice_intervals[i] * z
     if x>=result:
       return result
@@ -39,7 +39,7 @@ def nice_round(x):
     return 0
   z = 10.0 ** (math.ceil(math.log10(x)) - 1.0)
   r = x / z
-  for i in xrange(len(nice_intervals) - 1):
+  for i in range(len(nice_intervals) - 1):
     result = z*nice_intervals[i]
     cutoff = 0.5*(result + z*nice_intervals[i+1])
     if x<=cutoff:
@@ -92,8 +92,8 @@ def nice_ticks_seq(lo, hi, ticks=5, inside=False):
 if __name__=='__main__':
 
   for tick in nice_ticks(5.5, 119.0, ticks=10, inside=True)[2]:
-    print tick,
-  print
+    print(tick, end=' ')
+  print()
 
-  print nice_ticks_seq(5.5, 119, ticks=10, inside=True)
-  print
+  print(nice_ticks_seq(5.5, 119, ticks=10, inside=True))
+  print()

@@ -1,10 +1,10 @@
 """
 1D RootFind class
 Bruce Wernick
-30 October 2017 11:17:00
+29 October 2017 4:46:20
 """
 
-from __future__ import division
+import sys
 
 EPS = sys.float_info.epsilon
 TINY = 2*EPS
@@ -229,11 +229,11 @@ class Ridder(RootFind):
       fx = self.f(x)
       if fx == 0.0:
         return x
-      if SIGN(fm,fx) <> fm:
+      if SIGN(fm,fx) != fm:
         xl = xm; fl = fm; xh = x; fh = fx
-      elif (SIGN(fl,fx) <> fl):
+      elif (SIGN(fl,fx) != fl):
         xh, fh = x, fx
-      elif SIGN(fh,fx) <> fh:
+      elif SIGN(fh,fx) != fh:
         xl, fl = x, fx
       else:
         raise ValueError('undefined error!')
@@ -292,6 +292,43 @@ class Brent(RootFind):
       else:
         b += SIGN(tol1, xm)
       fb = self.f(b)
+    raise ValueError('max iterations reached!')
+
+
+class Brent2(RootFind):
+
+  """Brent's inverse quadratic method,
+  by Kiusalaas, faster than NR and Wikipedia algorithm.
+  """
+
+  def __call__(self, x1, x2):
+    f1 = self.f(x1)
+    if f1 == 0: return x1
+    f2 = self.f(x2)
+    if f2 == 0: return x2
+    if f1*f2 > 0:
+      raise ValueError('root must be bracketed!')
+    if x1 > x2:
+      x1,x2 = x2,x1
+      f1,f2 = f2,f1
+    x3 = 0.5*(x1+x2)
+    for i in range(RootFind.maxi):
+      f3 = self.f(x3)
+      if abs(f3) < RootFind.tol: return x3
+      if f1*f3 < 0: b = x3
+      else: a = x3
+      if (x2-x1) < RootFind.tol*max(abs(x2),1): return 0.5*(x1+x2)
+      P = x3*(f1-f2)*(f2-f3+f1) + f2*x1*(f2-f3) + f1*x2*(f3-f1)
+      Q = (f2-f1)*(f3-f1)*(f2-f3)
+      if abs(Q) <= TINY: dx = b-a
+      else: dx = f3*P/Q
+      x = x3 + dx
+      if (x2-x)*(x-x1) < 0:
+        dx = 0.5*(x2-x1)
+        x = a+dx
+      if x < x3: x2,f2 = x3,f3
+      else: x1,f1 = x3,f3
+      x3 = x
     raise ValueError('max iterations reached!')
 
 
@@ -510,6 +547,55 @@ class ModRegulaFalsi(RootFind):
     raise ValueError('max iterations reached!')
 
 
+class Trisect(RootFind):
+
+  """Divide range into 3 segments.
+  Find the range [a,c1], [c1,c2], [c2,b] where the root exists and call it
+  recursively.
+  This is just an experiment to see if I could improve on Bisection.
+  """
+
+  def __init__(self, f):
+    super(Trisect, self).__init__(f)
+    RootFind.its = 0
+
+  def __call__(self, a, b):
+    if a > b: a,b = b,a
+
+    d = (b-a)/3
+    if d <= RootFind.tol:
+      return a+d
+
+    fa = self.f(a)
+    if abs(fa) < RootFind.tol:
+      return a
+
+    fb = self.f(b)
+    if abs(fb) < RootFind.tol:
+      return b
+
+    if fa*fb > 0:
+      raise ValueError("root must be bracketed")
+
+    RootFind.its += 1
+    if RootFind.its > RootFind.maxi:
+      raise ValueError('maxits reached!')
+
+    # 1st tri-step
+    c1 = a+d
+    fc1 = self.f(c1)
+    if fa*fc1 < 0:
+      return self.__call__(a,c1)
+
+    # 2nd tri-step
+    c2 = b-d
+    fc2 = self.f(c2)
+    if fc1*fc2 < 0:
+      return self.__call__(c1,c2)
+
+    # 3rd tri-step
+    return self.__call__(c2,b)
+
 
 # ------------------------------------------------------------------------------
 
@@ -525,59 +611,69 @@ if __name__ == '__main__':
   fx = func(-2, 3)
   root = Newton(fx)
   y = root(7)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   fx = lambda x: (x-2)*(x+3)
 
   root = rtSafe(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Secant(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Bisect(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Ridder(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Brent(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
+
+  root = Brent2(fx)
+  y = root(15,0.1)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
+
 
   root = Broyden(fx)
   y = root(7)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Halley(fx)
   y = root(7)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Schroeder(fx)
   y = root(7)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Illinois(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Pegasus(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = Anderson(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = RegulaFalsi(fx)
   y = root(15,0.1)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
 
   root = ModRegulaFalsi(fx)
   y = root(3,0.5)
-  print '{} root={:0.6g}'.format(root.kind, y)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
+
+  root = Trisect(fx)
+  y = root(3,0.5)
+  print(('{} root={:0.6g}'.format(root.kind, y)))
+
 

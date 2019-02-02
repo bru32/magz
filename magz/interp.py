@@ -94,10 +94,10 @@ def spline(x, y, yp1=1e99, ypn=1e99):
 
 if __name__ == '__main__':
 
-  print interp([1,2,3,4,5], 2.25)
+  print((interp([1,2,3,4,5], 2.25)))
 
   # create a spline and interpolate
   x = [1.0, 2.0, 3.0, 4.0, 5.0]
   y = [2.0, 8.0, 32.0, 8.0, 2.0]
   fx = spline(x, y)
-  print fx(2.5)
+  print((fx(2.5)))

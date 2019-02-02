@@ -4,8 +4,6 @@ Bruce Wernick
 10 October 2017 15:38:10
 """
 
-from __future__ import division
-
 from ioutil import name_only
 from poly import polyeval
 from roots import newt

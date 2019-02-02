@@ -19,7 +19,7 @@ def svdcmp(a, w, v):
   anorm = c = f = g = h = s = scale = x = y = z = 0.0
   i = its = j = jj = k = l = nm = 0
   flag = 0
-  rv1 = range(n)
+  rv1 = list(range(n))
   for i in range(0, n):
     l = i + 2
     rv1[i] = scale*g
@@ -202,7 +202,7 @@ def svdcmp(a, w, v):
 def svbksb(u,w,v,b):
   "back substitution"
   m, n = len(u), len(u[0])
-  x, tmp = range(n), range(n)
+  x, tmp = list(range(n)), list(range(n))
   for j in range(0,n):
     s = 0.0
     if w[j] != 0.0:
@@ -222,7 +222,7 @@ def SVDsolve(a,b):
   m, n = len(a), len(a[0])
   u = [[a[i][j] for j in range(n)] for i in range(m)]
   v = [[0.0 for j in range(n)] for i in range(m)]
-  w = range(n)
+  w = list(range(n))
   svdcmp(u, w, v)
   wmax = 0.0
   for j in range(0, n):
@@ -368,34 +368,34 @@ def polyARIfit(x, y, z):
 
 if __name__ == '__main__':
 
-  print 'linear equation solution [A][x]=[b]'
-  print 'sample from Gerald page 78'
+  print('linear equation solution [A][x]=[b]')
+  print('sample from Gerald page 78')
   a = [[3,-1,2],[1,2,3],[2,-2,-1]]
   b = [12,11,2]
   x = SVDsolve(a, b) # x=[3,2,1]
-  print 'b:', showvec(x)
-  print
+  print(('b:', showvec(x)))
+  print()
 
-  print 'example with specified polynomial'
+  print('example with specified polynomial')
   x = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
   y = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
   c = [246.78,24.676,2.4678,0.24679]
   for i in range(len(x)):
     y[i] = polyh(c, x[i])
   c, R2a = polyfit(x, y, 3)
-  print 'C:', showvec(c, '%0.5f')
-  print 'R2a %0.6f'%(R2a)
-  print
+  print(('C:', showvec(c, '%0.5f')))
+  print(('R2a %0.6f'%(R2a)))
+  print()
 
-  print 'example from HP-41C STAT PAC manual page 47'
+  print('example from HP-41C STAT PAC manual page 47')
   x = [0.8,1.0,1.2,1.4,1.6]
   y = [24,20,10,13,12]
   c, R2a = polyfit(x, y, 3)
-  print 'C:',showvec(c, '%0.5f')
-  print 'R2a %0.6f' % (R2a) # R2a=0.74
-  print
+  print(('C:',showvec(c, '%0.5f')))
+  print(('R2a %0.6f' % (R2a))) # R2a=0.74
+  print()
 
-  print 'poly2D Example'
+  print('poly2D Example')
   x = [float(i) for i in range(10)]
   y = [10.0*float(j) for j in range(4)]
   c = [2.24689,1.8,1.7,1.6,1.5,1.4,1.3,1.2,1.1]
@@ -404,7 +404,7 @@ if __name__ == '__main__':
     for j in range(len(y)):
       z.append(poly2d(c, x[i], y[j]))
   c, R2a = MLRfit(x, y, z)
-  print 'C:', showvec(c, '%0.5f')
-  print 'R2a %0.6f' % (R2a)
-  print
+  print(('C:', showvec(c, '%0.5f')))
+  print(('R2a %0.6f' % (R2a)))
+  print()
 

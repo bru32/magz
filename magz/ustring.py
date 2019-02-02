@@ -6,18 +6,16 @@ Bruce Wernick
 
 import random
 import string
-from fuzzywuzzy import fuzz
 
-__all__ = ['fuzzy', 'SameText', 'fsig']
+__all__ = ['SameText', 'fsig']
 
 
-def fuzzy(a, b):
-  return fuzz.ratio(a, b)
-
-def rand_str(n = 12):
+def rand_str(n=12, chars=string.ascii_letters+string.digits):
   "return a random string of length n"
-  chars = string.ascii_letters + string.digits
   return ''.join([random.choice(chars) for n in range(n)])
+
+def pword(size=12, chars=string.ascii_letters + string.digits):
+  return ''.join(random.choice(chars) for i in range(size))
 
 def SameText(a, b, strip=True):
   'case insensive compare'
@@ -38,8 +36,10 @@ def fsig(x, f='0.6g'):
   return float('{:{}}'.format(x,f))
 
 
+
 # ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
 
-  print fsig(123.456, '0.3f')
+  print((fsig(123.456, '0.3f')))
+

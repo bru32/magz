@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
   x = [1,2,3,4,5]
   y = [1.99,4,6,8.01,10]
-  print 'linreg'
+  print('linreg')
   a, b, r2 = linreg(x,y)
-  print 'coeff = {} {}, r2={}\n'.format(a, b, r2)
+  print(('coeff = {} {}, r2={}\n'.format(a, b, r2)))
 

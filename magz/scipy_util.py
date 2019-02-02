@@ -4,7 +4,7 @@ Bruce Wernick
 11 October 2017 16:26:20
 """
 
-from __future__ import division
+
 import numpy as np
 import scipy.optimize as sci
 import warnings
@@ -30,6 +30,6 @@ if __name__ == '__main__':
 
   a,b,c=1.234,2.345,3.456
   x = fsolve(f, 1.0, args=(a,b,c))
-  print 'x={:0.4f} f(x)={:0.6f}'.format(x, f(x,a,b,c))
+  print(('x={:0.4f} f(x)={:0.6f}'.format(x, f(x,a,b,c))))
 
 

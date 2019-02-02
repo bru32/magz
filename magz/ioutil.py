@@ -18,6 +18,12 @@ def name_only(path):
 def path_to_list(path='.'):
   return os.path.normpath(os.path.realpath(path)).split(os.sep)
 
+def splitall(path):
+  """split path into all parts
+  """
+  path = os.path.normpath(path)
+  return path.split(os.sep)
+
 def get_minpath(fn, n=1, add_ext=False):
   """last n paths + name (with optional ext)
   """
@@ -42,9 +48,9 @@ if __name__ == '__main__':
 
   path = 'c:/code/python/bwlib/test.py'
 
-  print 'name_only: ',  name_only(path)
-  print 'path_to_list: ', path_to_list(path)
-  print 'get_minpath: ', get_minpath(path)
+  print(('name_only: ',  name_only(path)))
+  print(('path_to_list: ', path_to_list(path)))
+  print(('get_minpath: ', get_minpath(path)))
 
 
 

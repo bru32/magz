@@ -20,7 +20,7 @@ def getfloat(dict, key, default=0.0):
 
 def update(d, u):
   "nested dictionary update"
-  for k, v in u.iteritems():
+  for k, v in list(u.items()):
     if isinstance(v, collections.Mapping):
       r = update(d.get(k, {}), v)
       d[k] = r
@@ -40,10 +40,10 @@ class AttrDict(dict):
 if __name__ == '__main__':
 
   d = {'value': 123.456}
-  print getfloat(d, 'value')
+  print((getfloat(d, 'value')))
 
   update(d, {'editor':{'name':'Bruce', 'company':'TechniSolve'}, 'project':[1,2,3,4,5]})
-  print d
+  print(d)
 
   a = AttrDict(a=1, b=2, c=3)
-  print a
+  print(a)

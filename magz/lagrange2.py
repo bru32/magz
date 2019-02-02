@@ -5,7 +5,7 @@ Bruce Wernick
 22 September 2017 5:21:48
 """
 
-from __future__ import division
+
 
 def lagrange2d(X, Y, Z):
   """lagrangian interpolation of 2-D table.
@@ -14,7 +14,7 @@ def lagrange2d(X, Y, Z):
   """
   m = len(X)
   n = len(Y)
-  if len(Z) <> n or len(Z[0]) <> m:
+  if not(len(Z) == n) or not(len(Z[0]) == m):
     raise ValueError('Z dimensions must be the same as X by Y!')
   def f(x, y):
     z = 0.0
@@ -31,7 +31,8 @@ def lagrange2d(X, Y, Z):
     return z
   return f
 
-def polyARI((a,b,c,d,e,f,g,h,i,j),x,y):
+def polyARI(coeff,x,y):
+  a,b,c,d,e,f,g,h,i,j = coeff
   return a+x*(x*(x*g+d)+b)+y*(y*(y*j+f)+c)+x*y*(e+x*h+y*i)
 
 def frange(a, b, n):
@@ -63,17 +64,17 @@ if __name__ == '__main__':
   # show the differences
   tcRange = frange(tc[0], tc[-1], 7)
   teRange = frange(te[0], te[-1], 9)
-  print ' '*8 + 'Difference table'
-  print ' '*6,
+  print((' '*8 + 'Difference table'))
+  print((' '*6,))
   for x in teRange:
-    print '{:6.2f}'.format(x),
-  print
-  print '-'*69
+    print(('{:6.2f}'.format(x),))
+  print()
+  print(('-'*69))
   for y in tcRange:
-    print '{:6.2f}'.format(y),
+    print(('{:6.2f}'.format(y),))
     for x in teRange:
       q1 = q(x, y)
       q2 = polyARI(a, x, y)
-      print '{:6.2f}'.format(q2),
-    print
+      print(('{:6.2f}'.format(q2),))
+    print()
 

@@ -5,7 +5,6 @@ Bruce Wernick
 29 October 2017 4:46:0
 """
 
-from __future__ import division
 import sys
 
 EPS = sys.float_info.epsilon
@@ -102,9 +101,10 @@ if __name__=='__main__':
   fxy = lambda x,y:(x-2.0, y-7.0)
   root = Method(fxy)
   x = (1.0,1.0)
-  print root(x)
+  print((root(x)))
 
 
+  '''
   # Example 2 - psychrometric eqn
   from pytek.hvac.psy_gatley2 import astate
 
@@ -129,7 +129,7 @@ if __name__=='__main__':
   root = Method(f)
   db,wb = root((db,wb))
   prop = astate(pa, db, wb)
-  print '{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)
+  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
 
 
   # Example 3. Psychrometric class combination
@@ -138,7 +138,7 @@ if __name__=='__main__':
     def __init__(self, **kwargs):
       self.set_props(**kwargs)
     def set_props(self, **kwargs):
-      for k,v in kwargs.items():
+      for k,v in list(kwargs.items()):
         setattr(self, k, v)
     def hawa(self, db, wb):
       a = astate(self.pa, db, wb)
@@ -157,15 +157,15 @@ if __name__=='__main__':
   guess = (24.0,16.0)
   db,wb = root(guess)
   prop = astate(cmb.pa, db, wb)
-  print '{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)
+  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
 
 
   # another combination
   cmb.set_props(pa=101,ha=47,wa=10e-3)
   root = Newton(cmb.hawa)
   db,wb = root((24,16))
-  print 'db/wb = {:0.2f}/{:0.2f} degC'.format(db,wb)
+  print(('db/wb = {:0.2f}/{:0.2f} degC'.format(db,wb)))
   prop = astate(cmb.pa, db, wb)
-  print '{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)
-
+  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
+  '''
 

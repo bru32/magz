@@ -42,7 +42,7 @@ def madd_vec(b, k, i, a):
 def gauss_jordan(A, b):
     'solve Ax = b by Gauss-Jordan elimination'
     r,c = len(A),len(A[0])
-    if r != c: raise IndexError, "A must be square"
+    if r != c: raise IndexError("A must be square")
     scale_equations(A, b)
     for j in range(r):
         # Select pivot row and make diagonal element unity.
@@ -51,7 +51,7 @@ def gauss_jordan(A, b):
             interchange_rows(A, j, jpivot); interchange_rows(b, j, jpivot)
         pivot = A[j][j]
         if abs(pivot) < 1.0e-15:
-            print "Warning: pivot too small:", pivot
+            print(("Warning: pivot too small:", pivot))
         scale_row(A, j, 1.0/pivot); scale_vec(b, j, 1.0/pivot)
         # Now, eliminate all off diagonal elements in the j-th column.
         for i in range(r):
@@ -84,4 +84,4 @@ if __name__ == '__main__':
 
   x = [1,2,3,4]
   y = [2,4,6.2,8]
-  print lin_leastsq(x, y)
+  print((lin_leastsq(x, y)))

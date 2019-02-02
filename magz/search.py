@@ -1,5 +1,7 @@
 """
 AStar Search
+  https://www.laurentluce.com/posts/solving-mazes-using-python-simple-recursivity-and-a-search/
+  github.com/laurentluce/python-algorithms/blob/master/algorithms/a_star_path_finding.py
 Bruce Wernick
 10 October 2017 15:38:10
 """
@@ -45,20 +47,26 @@ class SimpleSearch():
 
 # ---------------------
 # A star implementation
+# Node.__lt__ suggested by Jonathan Layman
+# https://github.com/laurentluce/python-algorithms/issues/6
 # ---------------------
 
 class Node():
-  def __init__(self, x, y, free):
+  def __init__(self, x, y, isfree):
     self.parent = None
     self.x, self.y = x, y
     self.g, self.h, self.f = 0, 0, 0
-    self.free = free
+    self.isfree = isfree
+  def __lt__(self, other):
+    return self.f < other.f
+  def __str__(self):
+    return 'x:{}, y:{}, g={}, h={}, f={}, isfree={}'.format(self.x, self.y, self.g, self.h, self.f, self.isfree)
 
 class AStar():
   def __init__(self):
-    self.open = []
-    heapify(self.open)
-    self.closed = set()
+    self.openlist = []
+    heapify(self.openlist)
+    self.closedset = set()
     self.nodes = []
     self.m, self.n = 0, 0
 
@@ -68,12 +76,12 @@ class AStar():
     for x in range(self.m):
       for y in range(self.n):
         if grid[x][y] == 1:
-          free = False
+          isfree = False
         else:
-          free = True
+          isfree = True
         if grid[x][y] == 2:
           x2,y2 = x,y
-        self.nodes.append(Node(x, y, free))
+        self.nodes.append(Node(x, y, isfree))
     self.start = self.getnode(x0, y0)
     self.end = self.getnode(x2, y2)
 
@@ -90,7 +98,7 @@ class AStar():
       a.append(nn)
 
   def adj(self, node):
-    x,y=node.x,node.y
+    x,y = node.x,node.y
     a=[]
     self.addnode(a, x+1, y, node.g+10)
     self.addnode(a, x+1, y-1, node.g+14)
@@ -113,59 +121,61 @@ class AStar():
     return path
 
   def updatenode(self, n, node):
-    #n.g = node.g + 10
+    n.g = node.g + 10
     n.h = self.heuristic(n)
     n.parent = node
     n.f = n.h + n.g
 
   def process(self):
-    heappush(self.open, (self.start.f, self.start))
-    while len(self.open):
-      f, node = heappop(self.open)
-      self.closed.add(node)
+    heappush(self.openlist, (self.start.f, self.start))
+    while len(self.openlist):
+      f, node = heappop(self.openlist)
+      self.closedset.add(node)
       if node is self.end:
         return self.getpath()
       nodes = self.adj(node)
       for n in nodes:
-        if n.free and n not in self.closed:
-          if (n.f, n) in self.open:
-            if n.g > node.g + 10:
+        if (n.isfree) and (n not in self.closedset):
+          if (n.f, n) in self.openlist:
+            if n.g > (node.g + 10):
               self.updatenode(n, node)
           else:
             self.updatenode(n, node)
-            heappush(self.open, (n.f, n))
-
-
-def find_start(grid):
-  for r,row in enumerate(grid):
-    for c,val in enumerate(row):
-      if val == 7:
-        return r,c
-  return 0,0
-
+            heappush(self.openlist, (n.f, n))
 
 # ------------------------------------------------------------------------------
 
+def find_pos(grid, ch):
+  for r,row in enumerate(grid):
+    for c,val in enumerate(row):
+      if val == ch:
+        return r,c
+  return 0,0
+
 if __name__ == '__main__':
 
-  # start at 7, target = 2
-  grid = [[1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0],
-          [0, 1, 0, 0, 7, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-          [0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
-          [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+  # start=7, target=2
+  grid = [
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 7, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-
-  r,c = find_start(grid)
+  r,c = find_pos(grid, 7)
 
   search = SimpleSearch(grid)
-  print 'Simple search: ',
-  print search.process(r,c)
-  print
+  L = search.process(r,c)
+  print('Simple search')
+  print('length: {}'.format(len(L)))
+  print(L)
+  print()
 
   astar = AStar()
   astar.initgrid(grid,r,c)
-  print 'A* search: ',
-  print astar.process()
+  L = astar.process()
+  print('A* search: ')
+  print('length: {}'.format(len(L)))
+  print(L)
 

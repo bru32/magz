@@ -4,8 +4,6 @@ Bruce Wernick
 10 October 2017 15:38:10
 """
 
-from __future__ import division
-
 __all__ = ['counter', 'frange', 'linrange']
 
 
@@ -18,7 +16,7 @@ class Counter:
 
   def total(self):
     total = 0
-    for k,v in self.value.items():
+    for k,v in list(self.value.items()):
       total += v
     return total
 
@@ -62,5 +60,5 @@ def linrange(start, final, count):
 if __name__ == '__main__':
 
   for item in linrange(1.2, 23.5, 5):
-    print item
+    print (item)
 
