@@ -5,7 +5,7 @@ To install package run:
   python setup.py install
 
 Bruce Wernick
-08 October 2017 7:11:27
+02 February 2019 12:21:00
 """
 
 from setuptools import setup, find_packages
@@ -18,7 +18,7 @@ with open('LICENSE') as f:
 
 setup(
   name='magz',
-  version='0.1.0',
+  version='0.2.0',
   description='TechniSolve tools package',
   long_description=readme,
   author='Bruce Wernick',
