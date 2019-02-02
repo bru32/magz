@@ -4,7 +4,7 @@ Bruce Wernick
 10 October 2017 15:38:10
 """
 
-from __future__ import division
+
 import numpy as np
 from scipy.optimize import leastsq
 from scipy.stats import linregress
@@ -12,10 +12,12 @@ from scipy.stats import linregress
 __all__ = ['CurveFit', 'get_outlier']
 
 
-def poly2D((a,b,c,d,e,f,g,h,i),x,y):
+def poly2D(coeff,x,y):
+  (a,b,c,d,e,f,g,h,i) = coeff
   return a+x*(b+x*c)+y*(d+y*e)+x*y*(f+x*g+y*h+x*y*i)
 
-def polyARI((a,b,c,d,e,f,g,h,i,j),x,y):
+def polyARI(coeff,x,y):
+  (a,b,c,d,e,f,g,h,i,j) = coeff
   return a+x*(x*(x*g+d)+b)+y*(y*(y*j+f)+c)+x*y*(e+x*h+y*i)
 
 def resid2D(a, x, y, z):
@@ -64,7 +66,7 @@ def fitARI(a, x, y, z):
 def prep(xRange, yRange, zData, factor):
   m = len(xRange)
   n = len(yRange)
-  if len(zData)<>n or len(zData[0])<>m:
+  if len(zData)!=n or len(zData[0])!=m:
     raise ValueError('zData has wrong size')
   x,y,z = [],[],[]
   for j in range(n):
@@ -115,8 +117,8 @@ if __name__=='__main__':
   a0 = [17.2797,0.839686,0.108983,0.0151333,-0.00703109,
         -0.00566044,0.000101379,-0.000156348,2.06388e-05,3.72305e-05]
   a, cod = CurveFit(te, tc, qe, a0, factor, kind)
-  print polyARI(a, 6.0, 47.0)
-  print a
+  print((polyARI(a, 6.0, 47.0)))
+  print(a)
   a = [float('{:0.6g}'.format(x)) for x in a]
-  print kind, list(a), round(cod,5)
-  print get_outlier(a, te, tc, qe, factor, kind)
+  print((kind, list(a), round(cod,5)))
+  print((get_outlier(a, te, tc, qe, factor, kind)))
