@@ -10,7 +10,7 @@ def find_path(graph, start, end, path=[]):
   path = path + [start]
   if start == end:
     return path
-  if not graph.has_key(start):
+  if start not in graph:
     return None
   for node in graph[start]:
     if node not in path:
@@ -22,7 +22,7 @@ def find_all_paths(graph, start, end, path=[]):
   path = path + [start]
   if start == end:
     return [path]
-  if not graph.has_key(start):
+  if start not in graph:
     return []
   paths = []
   for node in graph[start]:
@@ -36,7 +36,7 @@ def find_shortest_path(graph, start, end, path=[]):
   path = path + [start]
   if start == end:
     return path
-  if not graph.has_key(start):
+  if start not in graph:
     return None
   shortest = None
   for node in graph[start]:
@@ -60,6 +60,6 @@ if __name__=="__main__":
            'E': ['F'],
            'C': ['F']}
 
-  print find_path(graph, 'A', 'D')
-  #print find_all_paths(graph, 'A', 'D')
-  #print find_shortest_path(graph, 'A', 'D')
+  print((find_path(graph, 'A', 'D')))
+  #print (find_all_paths(graph, 'A', 'D'))
+  #print (find_shortest_path(graph, 'A', 'D'))

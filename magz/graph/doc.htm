@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="author" content="Bruce Wernick" />
+<title>network</title>
+<style>
+  body {font-family:"courier new"}
+  #byline, #copyrite {font-size:10pt;color:#ccc}
+  #copyrite {text-align:center}
+  article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {display:block}
+</style>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<header>
+<h1>Heading</h1>
+<p id="byline">Author: Bruce Wernick<br>Last Updated: 5 Nov 2018</p>
+</header>
+<article>
+<p>&nbsp;</p>
+
+<p>DuctNet and PipeNet are based on a graph data structure.</p>
+
+<p>The graph is a list of nodes with links to other nodes.</p>
+
+<p>In Python, this structure is easy to represent as an adjacency list.</p>
+
+<pre>
+  graph = {'A': ['B', 'D'],
+           'B': ['C', 'E'],
+           'D': ['C', 'E'],
+           'C': ['E'],
+           'E': ['A']}
+</pre>
+
+<p>Here we have 5 nodes named A to E.</p>
+
+<p>Each node has a list of adjacent nodes.  That's why it's called an adjacency list.</p>
+
+<p>At a higher level, these adjacent nodes actually imply an edge (or branch). 
+In DuctNet, this would be a duct and in PipeNet, it would be a pipe.</p>
+
+<p>At this low level, the code doesn't need to know all of this complexity. 
+Essentially, we need to be able to find our way around the network.</p>
+
+<p>For example, we want to be able to determine if there is a path from A to E.</p>
+
+<p>Since it is such a small graph, we can see this easily. In fact, there are 
+a multiple possible paths. [A,B,E], [A,D,E], [A,B,C,E], [A,D,C,E].</p>
+
+<p>The following simple Python function will return True if there is a path 
+from</p> 
+
+
+<p>&nbsp;</p>
+</article>
+<footer>
+<p id="copyrite">&copy; 2018&nbsp;&nbsp;TechniSolve Software&nbsp;&nbsp;All rights reserved...</p>
+</footer>
+</body>	
+</html>

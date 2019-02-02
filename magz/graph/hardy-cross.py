@@ -102,10 +102,10 @@ if __name__=="__main__":
     m = mesh_dp(e,m)
     m = mesh_dq(m)
     e = edge_flow(e,m)
-    print '%4d %s'%(i,flows(e)),
+    print('%4d %s'%(i,flows(e)), end=' ')
     mx = max_error(m)
-    print '%0.4f'%mx,
-    print
+    print('%0.4f'%mx, end=' ')
+    print()
     if mx < 1.0e-3:break
     i += 1
     if i > 100:break

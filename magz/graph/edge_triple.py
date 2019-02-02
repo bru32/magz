@@ -39,17 +39,11 @@ def find_path(graph, a, b, path=[], c=None):
         return newpath
   return None
 
-def cmp(a,b):
-  'compare based on node weights weights stored n position 2'
-  if a[2]>b[2]: return 1;
-  if a[2]<b[2]: return -1;
-  return 0;
-
 def mst(graph):
   'minimum spanning tree'
   tree=[]
   basic=[]
-  graph.sort(cmp)
+  graph.sort(key=lambda a: a[2])
   for e in graph:
     if not find_path(tree,e[0],e[1]):
       tree.append(e)
@@ -93,5 +87,7 @@ if __name__=='__main__':
   for b in basic:
     path = find_path(tree, b[1], b[0])
     mesh = edge_list(tree, path)
-    print mesh
-  print
+    print (mesh)
+  print()
+
+
