@@ -1,18 +1,16 @@
 """
-I/O Utils
+I/O Utils.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 import os
 
-
 __all__ = ['name_only', 'path_to_list', 'get_minpath']
-
 
 def name_only(path):
   "return file name only from the full path spec"
-  name, ext = os.path.splitext(os.path.basename(path))
+  name, _ = os.path.splitext(os.path.basename(path))
   return name
 
 def path_to_list(path='.'):
@@ -42,15 +40,12 @@ def get_minpath(fn, n=1, add_ext=False):
   return res
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
   path = 'c:/code/python/bwlib/test.py'
-
-  print(('name_only: ',  name_only(path)))
-  print(('path_to_list: ', path_to_list(path)))
-  print(('get_minpath: ', get_minpath(path)))
-
-
+  print('name_only: ',  name_only(path))
+  print('path_to_list: ', path_to_list(path))
+  print('get_minpath: ', get_minpath(path))
 

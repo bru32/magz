@@ -1,14 +1,17 @@
 """
-General utils
+General Utils.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
-__all__ = ['counter', 'frange', 'linrange']
 
+__all__ = ['Counter', 'frange', 'linrange']
 
 class Counter:
-  "General purpose counter using dictionary"
+  
+  """General purpose counter using dictionary
+  """
+  
   value = {}
 
   def __call__(self):
@@ -16,7 +19,7 @@ class Counter:
 
   def total(self):
     total = 0
-    for k,v in list(self.value.items()):
+    for _,v in list(self.value.items()):
       total += v
     return total
 
@@ -37,7 +40,6 @@ class Counter:
       self.value[key] -= 1
     else:
       self.value[key] = 0
-
 
 # ------------------------------------------------------------------------------
 
@@ -60,5 +62,5 @@ def linrange(start, final, count):
 if __name__ == '__main__':
 
   for item in linrange(1.2, 23.5, 5):
-    print (item)
+    print(item)
 

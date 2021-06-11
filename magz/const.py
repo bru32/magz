@@ -1,8 +1,13 @@
 """
-Useful math constants
+Constants and global variables.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
+
+import sys
+
+EPS = sys.float_info.epsilon
+TINY = 2*EPS
 
 E = 2.7182818284590452354
 LOG2E = 1.4426950408889634074
@@ -17,3 +22,12 @@ TWO_PI = 0.63661977236758134308
 TWO_SQRTPI = 1.1283791670955125739
 SQRT2 = 1.4142135623730950488
 SQRT1_2 = 0.7071067811865475244
+
+
+# ---------------------------------------------------------------------
+
+if __name__=='__main__':
+
+  print(f'eps = {EPS}')
+  print(f'TINY = {TINY}')
+

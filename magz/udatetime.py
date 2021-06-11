@@ -1,7 +1,7 @@
 """
-My datetime utils
+DateTime utils.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 __all__ = ['Now, Nowdict']
@@ -45,23 +45,22 @@ def Nowdict():
   return dict(day=c.day,month=c.month,year=c.year,hour=c.hour,min=c.minute,sec=c.second)
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
   # use class to get datetime dict
-  print(('{day} {month} {year} {hour}:{min}:{sec}'.format(**Now())))
+  print('{day} {month} {year} {hour}:{min}:{sec}'.format(**Now()))
 
   # use function
-  print(('{day} {month} {year} {hour}:{min}:{sec}'.format(**Nowdict())))
-
+  print('{day} {month} {year} {hour}:{min}:{sec}'.format(**Nowdict()))
 
   # get the datetime
   dt = datetime.now()
 
   # format with strftime
-  print((dt.strftime('%d %B %Y %H:%M:%S')))
+  print(dt.strftime('%d %B %Y %H:%M:%S'))
 
   # use format str directly
-  print(('{:%d %B %Y %H:%M:%S}'.format(dt)))
-  print(('{0.day}/{0.month}/{0.year}'.format(dt)))
+  print('{:%d %B %Y %H:%M:%S}'.format(dt))
+  print('{0.day}/{0.month}/{0.year}'.format(dt))

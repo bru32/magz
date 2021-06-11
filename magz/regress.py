@@ -1,14 +1,13 @@
 """
-Simply (pure Python) regression
+Simply (pure Python) regression.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 __all__ = ['cod', 'linreg']
 
-
 def cod(X, Y):
-  "Coefficient of determination, R2"
+  "Coefficient of determination, R**2"
   n = len(X)
   sx = sy = sxx = syy = sxy = 0.0
   for x,y in zip(X,Y):
@@ -41,7 +40,7 @@ def linreg(X, Y):
   return a, b, b*c/f
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
@@ -49,5 +48,4 @@ if __name__ == '__main__':
   y = [1.99,4,6,8.01,10]
   print('linreg')
   a, b, r2 = linreg(x,y)
-  print(('coeff = {} {}, r2={}\n'.format(a, b, r2)))
-
+  print('coeff = {} {}, r2={}\n'.format(a, b, r2))

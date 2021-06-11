@@ -1,16 +1,13 @@
 """
-path finding
+Path finding (through a graph).
   DFS
   A* search
-
 ref:
   Amit Patel: Red Blob Games
   https://www.redblobgames.com/pathfinding/a-star/implementation.html
-
 Bruce Wernick
-11 October 2017 17:41:57
+10 June 2021
 """
-
 
 class SimpleGraph:
   def __init__(self):
@@ -181,5 +178,4 @@ def a_star_search(graph, start, goal):
         frontier.put(next, priority)
         came_from[next] = current
   return came_from, cost_so_far
-
 

@@ -1,11 +1,10 @@
 """
-Interpolation tools
+Interpolation tools.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 __all__ = ['binary_search', 'interp']
-
 
 def binary_search(dat, key, x):
   """binary search for array of dict.
@@ -33,8 +32,6 @@ def interp(a, v):
     if v <= a[i]:
       return i
   return -1
-
-
 
 def vector(n, default=0.0):
   return [default for x in range(n)]
@@ -90,14 +87,13 @@ def spline(x, y, yp1=1e99, ypn=1e99):
   return interp
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
-
-  print((interp([1,2,3,4,5], 2.25)))
+  print(interp([1,2,3,4,5], 2.25))
 
   # create a spline and interpolate
   x = [1.0, 2.0, 3.0, 4.0, 5.0]
   y = [2.0, 8.0, 32.0, 8.0, 2.0]
   fx = spline(x, y)
-  print((fx(2.5)))
+  print(fx(2.5))

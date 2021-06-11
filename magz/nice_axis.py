@@ -1,8 +1,8 @@
 """
-nice_axis
+Nice Axis Intervals.
 Extracted from Heckbert, Graphic Gems
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 import math
@@ -27,7 +27,7 @@ def nice_floor(x):
   if x<0:
     return -1*nice_ceil(-1*x)
   z = 10.0 ** (math.ceil(math.log10(x)) - 1.0)
-  r = x / z
+  #r = x / z
   for i in range(len(nice_intervals)-1, 1, -1):
     result = nice_intervals[i] * z
     if x>=result:
@@ -38,7 +38,7 @@ def nice_round(x):
   if x==0:
     return 0
   z = 10.0 ** (math.ceil(math.log10(x)) - 1.0)
-  r = x / z
+  #r = x / z
   for i in range(len(nice_intervals) - 1):
     result = z*nice_intervals[i]
     cutoff = 0.5*(result + z*nice_intervals[i+1])
@@ -66,7 +66,7 @@ def nice_ticks(lo, hi, ticks=5, inside=False):
       return nice_ticks(-1, 1, ticks, inside)
     else:
       return nice_ticks(nice_floor(lo), nice_ceil(hi), ticks, inside)
-  nice_delta_x = nice_ceil(delta_x)
+  #nice_delta_x = nice_ceil(delta_x)
   delta_t = nice_round(delta_x / (ticks - 1))
   if inside:
     lo_t = delta_t * math.ceil(lo / delta_t)
@@ -87,10 +87,9 @@ def nice_ticks_seq(lo, hi, ticks=5, inside=False):
   return tuple(nice_ticks(lo, hi, ticks, inside)[2])
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__=='__main__':
-
   for tick in nice_ticks(5.5, 119.0, ticks=10, inside=True)[2]:
     print(tick, end=' ')
   print()

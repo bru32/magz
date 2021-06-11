@@ -1,13 +1,13 @@
 """
-AStar Search
+AStar Search.
+ref:
   https://www.laurentluce.com/posts/solving-mazes-using-python-simple-recursivity-and-a-search/
   github.com/laurentluce/python-algorithms/blob/master/algorithms/a_star_path_finding.py
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 from heapq import heapify, heappush, heappop
-
 
 class SimpleSearch():
   def __init__(self, grid):
@@ -44,12 +44,11 @@ class SimpleSearch():
         return newpath
     return None
 
-
-# ---------------------
+# ---------------------------------------------------------------------
 # A star implementation
 # Node.__lt__ suggested by Jonathan Layman
 # https://github.com/laurentluce/python-algorithms/issues/6
-# ---------------------
+# ---------------------------------------------------------------------
 
 class Node():
   def __init__(self, x, y, isfree):
@@ -143,14 +142,15 @@ class AStar():
             self.updatenode(n, node)
             heappush(self.openlist, (n.f, n))
 
-# ------------------------------------------------------------------------------
-
 def find_pos(grid, ch):
   for r,row in enumerate(grid):
     for c,val in enumerate(row):
       if val == ch:
         return r,c
   return 0,0
+
+
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
@@ -178,4 +178,3 @@ if __name__ == '__main__':
   print('A* search: ')
   print('length: {}'.format(len(L)))
   print(L)
-

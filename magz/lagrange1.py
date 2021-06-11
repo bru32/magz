@@ -1,12 +1,11 @@
 """
-1d interpolation by lagrange method
+1D interpolation by Lagrange method.
 Bruce Wernick
-22 September 2017 20:59:31
+10 June 2021
 """
 
-
-
 def lagrange1d(X, Y):
+  "1D Lagrange interpolation"
   n = len(X)
   def f(x):
     s = 0.0
@@ -20,12 +19,11 @@ def lagrange1d(X, Y):
   return f
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
   x = [1,2,3,4,5]
   y = [2,4,6,8,10]
   fx = lagrange1d(x, y)
-  print((fx(2.5)))
-
+  print(fx(2.5))

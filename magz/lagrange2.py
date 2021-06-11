@@ -1,14 +1,12 @@
 """
-Lagrange 2D
+Lagrange 2D.
 Stoecker "Design of Thermal Systems", 2nd ed. page 62.
 Bruce Wernick
-22 September 2017 5:21:48
+10 June 2021
 """
 
-
-
 def lagrange2d(X, Y, Z):
-  """lagrangian interpolation of 2-D table.
+  """Lagrangian interpolation of 2-D table.
   X[0..m-1] and Y[0..n-1] are the independent variables.
   Z[0..n-1,0..m-1] is the dependent variable
   """
@@ -42,10 +40,9 @@ def frange(a, b, n):
   return r
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
-
   # thermal engineering example
   # te = evap temp [degC]
   # tc = cond temp [degC]
@@ -64,17 +61,16 @@ if __name__ == '__main__':
   # show the differences
   tcRange = frange(tc[0], tc[-1], 7)
   teRange = frange(te[0], te[-1], 9)
-  print((' '*8 + 'Difference table'))
-  print((' '*6,))
+  print(' '*8 + 'Difference table')
+  print(' '*6,)
   for x in teRange:
-    print(('{:6.2f}'.format(x),))
+    print('{:6.2f}'.format(x),)
   print()
-  print(('-'*69))
+  print('-'*69)
   for y in tcRange:
-    print(('{:6.2f}'.format(y),))
+    print('{:6.2f}'.format(y),)
     for x in teRange:
       q1 = q(x, y)
       q2 = polyARI(a, x, y)
-      print(('{:6.2f}'.format(q2),))
+      print('{:6.2f}'.format(q2),)
     print()
-

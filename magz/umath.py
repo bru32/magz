@@ -1,20 +1,18 @@
 """
-Math tools
+Math Utils.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
-
 
 import math
 import sys
 
+__all__ = ['showvec', 'makemat', 'makevec', 'MAX', 'MIN', 'SIGN',
+  'SQR', 'pythag', 'is_number', 'odd', 'sum_inv', 'is_close', 'max2',
+  'liststat', 'ave', 'sum_inv']
 
-__all__ = ['showvec', 'makemat', 'makevec', 'MAX', 'MIN', 'SIGN', 'SQR',
-  'pythag', 'is_number', 'odd', 'sum_inv', 'is_close', 'max2', 'liststat',
-  'ave']
 
-
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 # These functions are not necessary but are defined here
 # to be compatible with Numerical Recipes.
@@ -48,7 +46,7 @@ def SQR(a):
   b = a
   return b*b
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 def showvec(x, f='%0.6f'):
   "string format of vector"
@@ -128,7 +126,7 @@ def ave(a):
   "average of list"
   return sum(a) / float(len(a))
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 def minfunc(f,*a):
   "return inner function"
@@ -156,17 +154,21 @@ def golden(f, a, b, tol=1e-3):
     c, d = b-e, a+e
   return 0.5*(a+b)
 
-# ------------------------------------------------------------------------------
+def sum_inv(a):
+  "parallel resistance"
+  return 1/sum(1/x for x in a)
+
+
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
-  print((max2([3,5,7,8,17,12])))
+  print(max2([3,5,7,8,17,12]))
 
   from utils import linrange
   f = lambda x: (x-2)*(x+3)
   x = golden(f, -10, 10)
-  print(('f({}) = {}'.format(x, f(x))))
+  print('f({}) = {}'.format(x, f(x)))
   for x in linrange(-10, 10, 10):
-    print(('f({}) = {}'.format(x, f(x))))
-
+    print('f({}) = {}'.format(x, f(x)))
 

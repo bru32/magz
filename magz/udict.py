@@ -1,13 +1,12 @@
 """
-Dictionary Tools
+Dictionary Tools.
 Bruce Wernick
-10 October 2017 15:38:10
+10 June 2021
 """
 
 import collections
 
 __all__ = ['getfloat', 'update']
-
 
 def getfloat(dict, key, default=0.0):
   "return floating point value from dictionary"
@@ -16,7 +15,6 @@ def getfloat(dict, key, default=0.0):
     return float(value)
   except:
     return default
-
 
 def update(d, u):
   "nested dictionary update"
@@ -28,19 +26,18 @@ def update(d, u):
       d[k] = u[k]
   return d
 
-
 class AttrDict(dict):
   def __init__(self, *args, **kwargs):
     super(AttrDict, self).__init__(*args, **kwargs)
     self.__dict__ = self
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
   d = {'value': 123.456}
-  print((getfloat(d, 'value')))
+  print(getfloat(d, 'value'))
 
   update(d, {'editor':{'name':'Bruce', 'company':'TechniSolve'}, 'project':[1,2,3,4,5]})
   print(d)

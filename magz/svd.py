@@ -1,8 +1,8 @@
 """
-Singular Valued Decomposition:
+Singular Valued Decomposition.
   - based on Numerical Recipes 2nd ed.
 Bruce Wernick
-10 October 2017 19:25:19
+10 June 2021
 """
 
 from math import sqrt
@@ -10,7 +10,6 @@ from umath import showvec, makemat, makevec, MAX, MIN, SIGN, SQR, pythag
 from regress import cod
 
 __all__ = ['SVDsolve', 'polyfit', 'MLRfit', 'poly2Dfit', 'polyARIfit']
-
 
 def svdcmp(a, w, v):
   "SVD: Singular Valued Decomposition"
@@ -235,7 +234,8 @@ def SVDsolve(a,b):
   x = svbksb(u, w, v, b)
   return x
 
-# ------------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------
 
 # --------------------------
 # Solve 1D polynomial by SVD
@@ -278,7 +278,7 @@ def polyfit(x, y, p):
   R2a = 1.0-(1.0-R2)*(n-1.0)/(n-p)
   return w, R2a
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 # ---------------------------------------
 # 2D polynomial curvefit by SVD
@@ -333,7 +333,7 @@ def poly2Dfit(x, y, z):
   R2a = 1.0-(1.0-R2)*(n-1.0)/(n-p)
   return w, R2a
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 # -----------------------------------------
 # ARI polynomial curvefit by SVD
@@ -364,7 +364,8 @@ def polyARIfit(x, y, z):
   R2a = 1.0-(1.0-R2)*(n-1.0)/(n-p)
   return w, R2a
 
-# ------------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------
 
 if __name__ == '__main__':
 
@@ -373,7 +374,7 @@ if __name__ == '__main__':
   a = [[3,-1,2],[1,2,3],[2,-2,-1]]
   b = [12,11,2]
   x = SVDsolve(a, b) # x=[3,2,1]
-  print(('b:', showvec(x)))
+  print('b:', showvec(x))
   print()
 
   print('example with specified polynomial')
@@ -383,16 +384,16 @@ if __name__ == '__main__':
   for i in range(len(x)):
     y[i] = polyh(c, x[i])
   c, R2a = polyfit(x, y, 3)
-  print(('C:', showvec(c, '%0.5f')))
-  print(('R2a %0.6f'%(R2a)))
+  print('C:', showvec(c, '%0.5f'))
+  print('R2a %0.6f'%(R2a))
   print()
 
   print('example from HP-41C STAT PAC manual page 47')
   x = [0.8,1.0,1.2,1.4,1.6]
   y = [24,20,10,13,12]
   c, R2a = polyfit(x, y, 3)
-  print(('C:',showvec(c, '%0.5f')))
-  print(('R2a %0.6f' % (R2a))) # R2a=0.74
+  print('C:',showvec(c, '%0.5f'))
+  print('R2a %0.6f' % (R2a)) # R2a=0.74
   print()
 
   print('poly2D Example')
@@ -404,7 +405,6 @@ if __name__ == '__main__':
     for j in range(len(y)):
       z.append(poly2d(c, x[i], y[j]))
   c, R2a = MLRfit(x, y, z)
-  print(('C:', showvec(c, '%0.5f')))
-  print(('R2a %0.6f' % (R2a)))
+  print('C:', showvec(c, '%0.5f'))
+  print('R2a %0.6f' % (R2a))
   print()
-

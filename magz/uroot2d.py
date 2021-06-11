@@ -1,15 +1,12 @@
 """
-2D Root Finder
+2D Root Finder.
 Function f(x,y) must return tuple of 2 error.
 Bruce Wernick
-29 October 2017 4:46:0
+10 June 2021
 """
 
 import sys
-
-EPS = sys.float_info.epsilon
-TINY = 2*EPS
-
+from const import EPS, TINY
 
 class RootFinder(object):
 
@@ -37,7 +34,6 @@ class RootFinder(object):
     J = (fxyo-fxy)/dx, (fxoy-fxy)/dy, (gxyo-gxy)/dx, (gxoy-gxy)/dy
     D = J[0]*J[3] - J[2]*J[1]
     return fxy, gxy, J, D
-
 
 class Broyden(RootFinder):
 
@@ -71,7 +67,6 @@ class Broyden(RootFinder):
       df,dg = fxy - f0, gxy - g0
     raise ValueError('max iterations reached!')
 
-
 class Newton(RootFinder):
 
   def __call__(self, xy):
@@ -90,82 +85,13 @@ class Newton(RootFinder):
     raise ValueError('max iterations reached!')
 
 
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 
 if __name__=='__main__':
 
-
-  # Example 1, linear equation
-  # trivial 2D function
-  Method = Newton
+  # Example 1, trivial 2D function
   fxy = lambda x,y:(x-2.0, y-7.0)
-  root = Method(fxy)
+  root = Broyden(fxy)
   x = (1.0,1.0)
-  print((root(x)))
-
-
-  '''
-  # Example 2 - psychrometric eqn
-  from pytek.hvac.psy_gatley2 import astate
-
-  def psy_hawa(pa, ha, wa):
-    def f(db, wb):
-      a = astate(pa, db, wb)
-      return ha-a[3], wa-a[4]
-    return f
-
-  def psy_harh(pa, ha, rh):
-    def f(db, wb):
-      a = astate(pa, db, wb)
-      return ha-a[3], rh-a[5]
-    return f
-
-  # full psy
-  # pa,db,wb,ha,wa,rh,td,pv,ps,ro,cp,va,za
-  pa, db, wb, ha, wa, rh, td = 82.5, 24.0, 16.0, 47.35, 9.55e-3, 0.45, 10.0
-  f = psy_harh(pa,ha,rh)
-  Method = Broyden
-  #Method = Newton
-  root = Method(f)
-  db,wb = root((db,wb))
-  prop = astate(pa, db, wb)
-  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
-
-
-  # Example 3. Psychrometric class combination
-  class psy_comb():
-    "pa,db,wb,ha,wa,rh,td,pv,ps,ro,cp,va,za"
-    def __init__(self, **kwargs):
-      self.set_props(**kwargs)
-    def set_props(self, **kwargs):
-      for k,v in list(kwargs.items()):
-        setattr(self, k, v)
-    def hawa(self, db, wb):
-      a = astate(self.pa, db, wb)
-      return self.ha-a[3], self.wa-a[4]
-    def harh(self, db, wb):
-      a = astate(self.pa, db, wb)
-      return self.ha-a[3], self.rh-a[5]
-    def hatd(self, db, wb):
-      a = astate(self.pa, db, wb)
-      return self.ha-a[3], self.td-a[6]
-
-  cmb = psy_comb(pa=101,ha=47,td=10)
-  f = cmb.hatd
-  Method = Broyden
-  root = Method(f)
-  guess = (24.0,16.0)
-  db,wb = root(guess)
-  prop = astate(cmb.pa, db, wb)
-  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
-
-
-  # another combination
-  cmb.set_props(pa=101,ha=47,wa=10e-3)
-  root = Newton(cmb.hawa)
-  db,wb = root((24,16))
-  print(('db/wb = {:0.2f}/{:0.2f} degC'.format(db,wb)))
-  prop = astate(cmb.pa, db, wb)
-  print(('{0:0.4g} {1:0.4g} {2:0.4g} {3:0.4g} {4:0.4g} {5:0.4g} {6:0.4g}'.format(*prop)))
-  '''
-
+  z = root(x)
+  print(f'roots = {z}')
