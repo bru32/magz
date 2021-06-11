@@ -17,7 +17,7 @@ Some functions are so common that I tend to need them in all my applications. I'
   + Compressors
   + Fans
 
-Updated: 2 Feb 2019 for Python 3.7.2
+Updated: 10 June 2021 for Python 3.9.5
 
 [www.coolit.co.za](http://www.coolit.co.za/index.htm)
 
